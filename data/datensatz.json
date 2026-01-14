@@ -1,1 +1,23 @@
-[]
+[
+    {
+        "id": 1,
+        "name": "Max Mustermann",
+        "birth_date": "2006-05-01",
+        "entry_date": "2021-09-01",
+        "class_name": "5AHINF"
+    },
+    {
+        "id": 2,
+        "name": "Anna Berger",
+        "birth_date": "2005-11-12",
+        "entry_date": "2020-09-01",
+        "class_name": "6BHINF"
+    },
+    {
+        "id": 3,
+        "name": "Lukas Maier",
+        "birth_date": "2007-02-20",
+        "entry_date": "2022-09-01",
+        "class_name": "4CHINF"
+    }
+]
