@@ -13,6 +13,8 @@
 [Ss]cripts
 pyvenv.cfg
 .venv
+__pycache__/
+*.pyc
 pip-selfcheck.json
 
 ### VisualStudioCode ###
