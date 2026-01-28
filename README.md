@@ -25,3 +25,9 @@ Die Anwendung speichert die Daten dauerhaft in einer **JSON-Datei** und lädt di
 
 ## Installation
 pip install fastapi uvicorn
+
+## How to run docker
+docker run -p 8000:8000 -v ${PWD}/data:/data schueler-api
+
+## Swagger 
+http://localhost:8000/docs

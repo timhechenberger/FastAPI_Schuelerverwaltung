@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-DATA_PATH = Path("data/datensatz.json")
+DATA_PATH = Path("/data/datensatz.json")
 
 def load_students():
     if not DATA_PATH.exists():
