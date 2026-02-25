@@ -1,0 +1,19 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY grpc_service ./grpc_service
+
+# Proto-Dateien kompilieren beim Build
+RUN python -m grpc_tools.protoc \
+    -I./grpc_service \
+    --python_out=./grpc_service \
+    --grpc_python_out=./grpc_service \
+    ./grpc_service/date_service.proto
+
+EXPOSE 50051
+
+CMD ["python", "grpc_service/server.py"]

@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package dateservice;
+
+// Request: 4 Datumswerte als String (YYYY-MM-DD)
+message DateDeltaRequest {
+  string birth_date = 1;
+  string entry_date = 2;
+  string current_date = 3;
+  string matura_date = 4;
+}
+
+// Response: 3 berechnete Werte in Tagen
+message DateDeltaResponse {
+  int32 age_in_days = 1;
+  int32 days_in_school = 2;
+  int32 days_until_matura = 3;
+}
+
+// Service Definition
+service DateService {
+  rpc CalcDateDelta (DateDeltaRequest) returns (DateDeltaResponse);
+}
