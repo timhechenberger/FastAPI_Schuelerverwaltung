@@ -2,6 +2,9 @@ from fastapi import FastAPI, HTTPException
 from typing import List
 from .models import Student, StudentCreate
 from .storage import load_students, save_students
+from .grpc_client import calc_date_delta
+from datetime import date
+
 
 app = FastAPI()
 
@@ -75,3 +78,16 @@ def initialize():
     ]
     save_students(students)
     return {"message": "Beispieldaten erstellt"}
+
+@app.get("/students/{student_id}/datecalc")
+def student_datecalc(student_id: int, matura_date: str = "2026-06-15"):
+    for s in students:
+        if s["id"] == student_id:
+            result = calc_date_delta(
+                birth_date=str(s["birth_date"]),
+                entry_date=str(s["entry_date"]),
+                current_date=str(date.today()),
+                matura_date=matura_date
+            )
+            return {"student": s["name"], **result}
+    raise HTTPException(status_code=404, detail="Schüler nicht gefunden")
