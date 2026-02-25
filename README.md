@@ -3,31 +3,39 @@
 School project (NSCS)
 
 ## Beschreibung
-Dieses Projekt ist eine einfache **Schülerverwaltungs-API**, die mit **FastAPI** in Python umgesetzt wurde.  
-Über eine REST-Schnittstelle können Schüler angelegt, abgefragt, geändert und gelöscht werden.
-
-Die Anwendung speichert die Daten dauerhaft in einer **JSON-Datei** und lädt diese beim Start automatisch wieder ein.
+Einfache **Schülerverwaltungs-API** mit **FastAPI** (REST) und einem **gRPC Service** für Datumsberechnungen.  
+Daten werden dauerhaft in einer JSON-Datei gespeichert.
 
 ## Funktionen
-- Schüler erstellen
-- Alle Schüler anzeigen
-- Einzelnen Schüler per ID abrufen
-- Schülerdaten ändern
-- Schüler löschen
-- Beispieldaten über einen Initialisierungs-Endpunkt erzeugen
+- Schüler erstellen, anzeigen, ändern, löschen
+- Beispieldaten über Initialisierungs-Endpunkt erzeugen
+- gRPC `CalcDateDelta`: berechnet Alter, Schuldauer und Tage bis zur Matura (Datumsformat: `YYYY-MM-DD`)
 
 ## Technologien
-- Python
-- FastAPI
-- Uvicorn
-- Virtual Environment (venv)
-- JSON-Dateispeicherung
+- Python, FastAPI, Uvicorn, gRPC / Protocol Buffers, venv, JSON-Dateispeicherung
 
 ## Installation
-pip install fastapi uvicorn
+```bash
+pip install fastapi uvicorn grpcio grpcio-tools
+```
 
-## How to run docker
+Proto-Dateien generieren (im `grpc_service` Ordner):
+```bash
+python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. date_service.proto
+```
+
+## How to run
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000     # FastAPI  (Port 8000)
+python grpc_service/server.py                       # gRPC     (Port 50051)
+python grpc_service/client_test.py                  # gRPC testen
+```
+
+## How to run Docker
+```bash
 docker run -p 8000:8000 -v ${PWD}/data:/data schueler-api
+docker build -f Dockerfile.grpc -t schueler-grpc . && docker run -p 50051:50051 schueler-grpc
+```
 
-## Swagger 
+## Swagger
 http://localhost:8000/docs
