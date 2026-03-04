@@ -61,8 +61,8 @@ def add_DateServiceServicer_to_server(servicer, server):
                     response_serializer=date__service__pb2.DateDeltaResponse.SerializeToString,
             ),
     }
-    generic_handler = grpc.method_handlers_generic_handler(
-            'dateservice.DateService', rpc_method_handlers)
+    generic_handler = grpc.method_service_handler(
+         'dateservice.DateService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
     server.add_registered_method_handlers('dateservice.DateService', rpc_method_handlers)
 

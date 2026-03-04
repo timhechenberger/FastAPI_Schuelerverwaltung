@@ -1,0 +1,21 @@
+services:
+  grpc-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.grpc
+    container_name: schueler-grpc
+    ports:
+      - "8000:8000"  
+    expose:
+      - "50051"
+
+  fastapi-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: schueler-api
+    depends_on:
+      - grpc-service
+    network_mode: "service:grpc-service"
+    volumes:
+      - ./data:/data
